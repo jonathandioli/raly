@@ -102,4 +102,4 @@ sources:
   usajobs: { enabled: false }
 
 email:
-  subject_prefix: L&D roles
+  subject_prefix: Raly

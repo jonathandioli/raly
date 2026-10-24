@@ -6,7 +6,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const newsreader = Newsreader({ variable: "--font-newsreader", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "L&D Jobs",
+  title: "Raly",
   description: "Daily ranked Learning & Development leadership roles",
   robots: { index: false, follow: false },
 };

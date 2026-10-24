@@ -1,5 +1,5 @@
 const CONTACT = process.env.CONTACT_EMAIL || "unset@example.com";
-export const USER_AGENT = `aly-job/1.0 (L&D job aggregator; contact ${CONTACT})`;
+export const USER_AGENT = `raly/1.0 (L&D job aggregator; contact ${CONTACT})`;
 
 export class HttpError extends Error {
   constructor(

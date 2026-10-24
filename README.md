@@ -1,4 +1,4 @@
-# aly-job: L&D leadership job aggregator
+# Raly: L&D leadership job aggregator
 
 Every morning this app pulls Learning & Development manager and director postings from official job APIs and public ATS boards. It drops duplicates and roles that fail the hard rules, scores each remaining role 0–100 for fit, and emails the top 15 new ones. You can review and mark the roles on a small web dashboard.
 

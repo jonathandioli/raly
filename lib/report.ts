@@ -64,7 +64,7 @@ export function renderMarkdown(r: ReportInput): string {
           .join("\n\n"),
       )
       .join("\n\n");
-  const parts = [`# L&D roles — ${day}`, r.items.length ? section(r.items) : "_No new roles today._"];
+  const parts = [`# Raly — ${day}`, r.items.length ? section(r.items) : "_No new roles today._"];
   if (r.digest.length) parts.push(`## Weekly digest: scored 60+ and not yet marked`, section(r.digest));
   parts.push("---", ...statsLines(r.stats).map((l) => `- ${l}`));
   return parts.join("\n\n") + "\n";
@@ -90,7 +90,7 @@ export function renderHtml(r: ReportInput): string {
      <table width="100%" cellpadding="0" cellspacing="0">${items.map(card).join("")}</table>`;
   return `<!doctype html><html><body style="margin:0;background:#fafaf9">
   <div style="max-width:640px;margin:0 auto;padding:24px 16px;background:#fafaf9">
-    <h1 style="font:600 24px/1.2 Georgia,serif;color:#1c1917;margin:0">L&amp;D roles</h1>
+    <h1 style="font:600 24px/1.2 Georgia,serif;color:#1c1917;margin:0">Raly</h1>
     <div style="font:14px -apple-system,Segoe UI,sans-serif;color:#78716c;margin-top:4px">${esc(day)} · ${r.items.length} new${r.dashboardUrl ? ` · <a href="${esc(r.dashboardUrl)}" style="color:#1d4ed8">open dashboard</a>` : ""}</div>
     ${r.items.length ? section(`Top ${r.items.length} new roles`, r.items) : `<p style="font:15px -apple-system,sans-serif;color:#57534e">No new roles today.</p>`}
     ${r.digest.length ? section("Weekly digest · scored 60+, not yet marked", r.digest) : ""}

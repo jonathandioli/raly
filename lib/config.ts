@@ -57,7 +57,7 @@ const ConfigSchema = z.object({
     jsearch: SourceToggle.extend({ max_queries_per_run: z.number().default(5) }),
     usajobs: SourceToggle,
   }),
-  email: z.object({ subject_prefix: z.string().default("L&D roles") }),
+  email: z.object({ subject_prefix: z.string().default("Raly") }),
 });
 
 const CompaniesSchema = z.object({

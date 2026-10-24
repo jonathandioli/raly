@@ -57,9 +57,82 @@ profile:
     floor: 120000 # 0 points if the posted max is below this
   locations:
     remote_us: true
-    # Add the candidate's metro (any substring of a posting's location), e.g. ["New York", "NYC", "Brooklyn"].
-    # Hybrid/on-site roles only pass when they match one of these.
-    metros: []
+    # Hybrid/on-site roles only pass in these places. "City, ST" matches that city in that
+    # state only (Manchester NH, not Manchester UK); an entry without a state is a plain substring.
+    metros:
+      # Metro Boston
+      - Boston, MA
+      - Cambridge, MA
+      - Somerville, MA
+      - Brookline, MA
+      - Newton, MA
+      - Watertown, MA
+      - Waltham, MA
+      - Lexington, MA
+      - Burlington, MA
+      - Woburn, MA
+      - Bedford, MA
+      - Billerica, MA
+      - Lowell, MA
+      - Chelmsford, MA
+      - Westford, MA
+      - Andover, MA
+      - North Andover, MA
+      - Tewksbury, MA
+      - Wilmington, MA
+      - Reading, MA
+      - Wakefield, MA
+      - Medford, MA
+      - Malden, MA
+      - Everett, MA
+      - Quincy, MA
+      - Braintree, MA
+      - Dedham, MA
+      - Needham, MA
+      - Wellesley, MA
+      - Natick, MA
+      - Framingham, MA
+      - Marlborough, MA
+      - Hopkinton, MA
+      - Southborough, MA
+      - Westborough, MA
+      - Norwood, MA
+      - Canton, MA
+      - Danvers, MA
+      - Peabody, MA
+      - Beverly, MA
+      - Salem, MA
+      - Haverhill, MA
+      - Methuen, MA
+      - Lawrence, MA
+      - Acton, MA
+      - Concord, MA
+      - Maynard, MA
+      - Littleton, MA
+      - Boxborough, MA
+      # Southern New Hampshire
+      - Nashua, NH
+      - Manchester, NH
+      - Merrimack, NH
+      - Hudson, NH
+      - Londonderry, NH
+      - Derry, NH
+      - Salem, NH
+      - Windham, NH
+      - Pelham, NH
+      - Bedford, NH
+      - Amherst, NH
+      - Milford, NH
+      - Hollis, NH
+      - Hooksett, NH
+      - Goffstown, NH
+      - Concord, NH
+      - Portsmouth, NH
+      - Dover, NH
+      - Durham, NH
+      - Exeter, NH
+      - Hampton, NH
+      - Rochester, NH
   posted_within_days: 7
   skills:
     - LMS

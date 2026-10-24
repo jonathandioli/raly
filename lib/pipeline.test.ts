@@ -2,7 +2,7 @@ import fs from "node:fs";
 import { describe, expect, it } from "vitest";
 import { parseConfig } from "./config";
 import { dedupe } from "./dedupe";
-import { applyFilters, isNonUs, matchTitle, rejectReason } from "./filter";
+import { applyFilters, inMetro, isNonUs, matchTitle, rejectReason } from "./filter";
 import { normalize, parseSalary } from "./normalize";
 import { prefilter } from "./prefilter";
 import { renderHtml, renderMarkdown } from "./report";
@@ -103,6 +103,7 @@ describe("filter", () => {
     expect(at({ postedAt: "2026-10-01T00:00:00Z" })).toBe("age");
     expect(at({ location: "Remote - Canada" })).toBe("location");
     expect(at({ location: "Chicago, IL" })).toBe("location");
+    expect(at({ location: "Waltham, MA (Hybrid)" })).toBeNull();
   });
   it("rejects sales/customer enablement but keeps talent roles", () => {
     const at = (title: string) => rejectReason(normalize(raw({ title }), NOW), config, NOW);
@@ -116,9 +117,19 @@ describe("filter", () => {
     expect(rejectReason(normalize(raw({ title: "Manager, Internal Learning & Development" }), NOW), config, NOW)).toBeNull();
   });
   it("lets hybrid roles through in a configured metro", () => {
-    const withMetro = { ...config, profile: { ...config.profile, locations: { remote_us: true, metros: ["Chicago"] } } };
+    const withMetro = { ...config, profile: { ...config.profile, locations: { remote_us: true, metros: ["Chicago, IL"] } } };
     const p = normalize(raw({ location: "Chicago, IL (Hybrid)" }), NOW);
     expect(applyFilters([p], withMetro, NOW).kept).toHaveLength(1);
+  });
+  it("matches metros by city and state", () => {
+    const m = ["Manchester, NH", "Boston, MA"];
+    expect(inMetro("Manchester, New Hampshire", m)).toBe(true);
+    expect(inMetro("USA, NH, Manchester", m)).toBe(true);
+    expect(inMetro("MA - Boston", m)).toBe(true);
+    expect(inMetro("Manchester, England", m)).toBe(false);
+    expect(inMetro("Manchester, CT", m)).toBe(false);
+    expect(inMetro("Concord, CA; Boston, MA", m)).toBe(true);
+    expect(inMetro("Bedford, TX; Springfield, MA", ["Bedford, MA"])).toBe(false);
   });
   it("spots non-US locations", () => {
     expect(isNonUs("London, UK")).toBe(true);

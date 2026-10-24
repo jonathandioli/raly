@@ -44,6 +44,7 @@ const ConfigSchema = z.object({
     weekly_digest_min_score: z.number().default(60),
   }),
   scoring: z.object({
+    llm: z.boolean().default(false),
     model: z.string().default("claude-haiku-5-5"),
     concurrency: z.number().default(5),
     max_llm_calls_per_run: z.number().default(150),

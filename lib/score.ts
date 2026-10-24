@@ -8,7 +8,8 @@ const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
 export function titlePoints(title: string, config: Config): number {
   const m = matchTitle(title, config.profile);
   const w = config.weights.title;
-  return m === "exact" ? w : m ? w / 2 : 0;
+  // Anything scored has already passed the L&D prefilter, so an unlisted title still earns half.
+  return m === "exact" ? w : w / 2;
 }
 
 export function salaryPoints(p: Pick<Posting, "salaryMin" | "salaryMax" | "salaryCurrency">, config: Config): number {

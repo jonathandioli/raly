@@ -99,7 +99,7 @@ describe("filter", () => {
     expect(at({ title: "Learning & Development Specialist" })).toBe("excluded_title");
     expect(at({ title: "Machine Learning Manager" })).toBe("excluded_title");
     expect(at({ title: "Learning Coordinator" })).toBe("excluded_title");
-    expect(at({ title: "Learning Experience Designer" })).toBe("seniority");
+    expect(at({ title: "Learning Experience Designer" })).toBe("title");
     expect(at({ postedAt: "2026-10-01T00:00:00Z" })).toBe("age");
     expect(at({ location: "Remote - Canada" })).toBe("location");
     expect(at({ location: "Chicago, IL" })).toBe("location");
@@ -109,6 +109,7 @@ describe("filter", () => {
     expect(at("Sales Enablement Manager")).toBe("excluded_title");
     expect(at("Senior Customer Enablement Manager")).toBe("excluded_title");
     expect(at("Enablement Manager")).toBe("title");
+    expect(at("Senior Software Engineer")).toBe("title");
     expect(at("Director, Talent Development")).toBeNull();
   });
   it("does not treat 'internal' as 'intern'", () => {

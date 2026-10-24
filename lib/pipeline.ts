@@ -116,7 +116,7 @@ export async function runPipeline(opts: RunOptions = {}): Promise<RunResult> {
       else toRate.push(p);
     }
     let llmErrors = 0;
-    const budget = semanticEnabled() ? toRate.slice(0, config.scoring.max_llm_calls_per_run) : [];
+    const budget = config.scoring.llm && semanticEnabled() ? toRate.slice(0, config.scoring.max_llm_calls_per_run) : [];
     if (budget.length) log(`Scoring ${budget.length} postings with ${config.scoring.model}…`);
     await pMap(budget, config.scoring.concurrency, async (p) => {
       try {

@@ -92,6 +92,9 @@ report:
   weekly_digest_min_score: 60
 
 scoring:
+  # Off: roles are ranked on title, salary, skills and freshness, with semantic fit held neutral.
+  # Turn on (and set ANTHROPIC_API_KEY) to have Claude rate each role against the reference job.
+  llm: false
   model: claude-haiku-5-5
   concurrency: 5
   max_llm_calls_per_run: 150

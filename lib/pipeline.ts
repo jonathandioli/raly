@@ -19,6 +19,8 @@ export interface RunOptions {
   /** Force the weekly digest on or off; by default it runs on the configured weekday. */
   digest?: boolean;
   kind?: string;
+  /** Override profile.posted_within_days for this run, e.g. a one-time backfill. */
+  maxAgeDays?: number;
   log?: (msg: string) => void;
 }
 
@@ -75,6 +77,7 @@ export async function runPipeline(opts: RunOptions = {}): Promise<RunResult> {
   const started = Date.now();
   const profile = loadProfile();
   const { config } = profile;
+  if (opts.maxAgeDays) config.profile.posted_within_days = opts.maxAgeDays;
   const useDb = hasDb();
   const write = useDb && !opts.dryRun;
 

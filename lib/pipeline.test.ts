@@ -171,6 +171,9 @@ describe("prefilter", () => {
     expect(pf("Machine Learning Engineer, Post Training").pass).toBe(false);
     expect(pf("Senior Instructional Designer", "LMS").pass).toBe(false);
     expect(pf("Store Manager in Training", "coaching and onboarding program").pass).toBe(false);
+    expect(pf("Pediatric Education Program Manager", "curriculum and facilitation").pass).toBe(false);
+    expect(pf("Project Manager, New Capabilities", "onboarding program").pass).toBe(false);
+    expect(pf("Sr. Manager, Workforce Capability Strategy", "upskill").pass).toBe(true);
   });
   it("catches an odd title when the description is clearly L&D", () => {
     const body = "Own the LMS, instructional design, needs analysis, Kirkpatrick evaluation and leadership development.";

@@ -1,5 +1,5 @@
 // Local CLI:
-//   npm run jobs -- run [--dry-run] [--no-email] [--digest]
+//   npm run jobs -- run [--dry-run] [--no-email] [--digest] [--days N]
 //   npm run jobs -- mark <id> applied|skip|saved|clear
 //   npm run jobs -- list [new|saved|applied|skip|all]
 import { db, listPostings, setStatus } from "../lib/db";
@@ -15,6 +15,10 @@ for (const f of [".env.local", ".env"]) {
 
 const [cmd, ...args] = process.argv.slice(2);
 const flag = (name: string) => args.includes(`--${name}`);
+const option = (name: string) => {
+  const i = args.indexOf(`--${name}`);
+  return i >= 0 ? args[i + 1] : undefined;
+};
 
 async function main() {
   switch (cmd) {
@@ -23,6 +27,7 @@ async function main() {
         dryRun: flag("dry-run"),
         email: !flag("no-email"),
         digest: flag("digest") ? true : undefined,
+        maxAgeDays: option("days") ? Number(option("days")) : undefined,
         kind: "cli",
         log: (m) => console.error(m),
       });
@@ -39,14 +44,14 @@ async function main() {
     }
     case "list": {
       const view = (args[0] ?? "new") as "new" | MarkStatus | "all";
-      const rows = await listPostings({ view, days: 14, limit: 50 });
+      const rows = await listPostings({ view, days: 45, limit: 50 });
       for (const r of rows) {
         console.log(`${String(r.score).padStart(3)}  ${r.id}  ${r.title} — ${r.company} · ${formatSalary(r.salary_min, r.salary_max)}${r.status ? ` [${r.status}]` : ""}`);
       }
       break;
     }
     default:
-      console.log("usage: jobs run [--dry-run] [--no-email] [--digest] | jobs mark <id> applied|skip|saved|clear | jobs list [view]");
+      console.log("usage: jobs run [--dry-run] [--no-email] [--digest] [--days N] | jobs mark <id> applied|skip|saved|clear | jobs list [view]");
       process.exitCode = cmd ? 1 : 0;
   }
 }

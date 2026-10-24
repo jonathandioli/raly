@@ -9,7 +9,7 @@ const TITLE_DOMAIN = [
   "learning", "learning and development", "learning development", "training", "talent development",
   "leadership development", "people development", "organizational development", "organisational development",
   "organizational effectiveness", "instructional", "instructional design", "curriculum", "education",
-  "academy", "university", "coaching", "capability", "capabilities", "upskilling", "reskilling",
+  "academy", "university", "coaching", "workforce capability", "people capability", "upskilling", "reskilling",
   "talent management", "people programs", "employee development", "employee experience", "onboarding",
   "facilitation", "knowledge management", "talent experience",
 ];
@@ -27,6 +27,8 @@ const TITLE_NOT_LD = [
   "product manager", "product designer", "marketing", "content", "generalist", "quality",
   // Retail "manager in training" programs are trainee roles, not L&D.
   "in training", "trainee", "store", "assistant store manager",
+  // Clinical and patient education is a healthcare specialty, not corporate L&D.
+  "pediatric", "surgery", "surgical", "vascular", "endovascular", "gi", "nursing", "patient", "medical", "clinical education",
 ];
 
 const SENIORITY = ["manager", "senior manager", "director", "associate director", "senior director", "head", "lead", "leader", "principal", "business partner"];

@@ -29,7 +29,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
   let runs: RunRow[] = [];
   let dbError: string | null = null;
   try {
-    [rows, runs] = await Promise.all([listPostings({ view, days: 14, limit: 100 }), recentRuns(8)]);
+    [rows, runs] = await Promise.all([listPostings({ view, days: 45, limit: 100 }), recentRuns(8)]);
   } catch (e) {
     dbError = e instanceof Error ? e.message : String(e);
   }
@@ -70,7 +70,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
         <p className="mt-8 rounded-md border border-flag/40 p-4 text-sm text-flag">Database error: {dbError}</p>
       ) : rows.length === 0 ? (
         <p className="mt-10 text-center text-muted">
-          {view === "new" ? "Nothing new in the last 14 days. Run the pipeline to fetch roles." : "Nothing here yet."}
+          {view === "new" ? "Nothing new in the last 45 days. Run the pipeline to fetch roles." : "Nothing here yet."}
         </p>
       ) : (
         <ol className="mt-4 divide-y divide-line">

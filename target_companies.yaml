@@ -99,3 +99,22 @@ companies:
   - { name: Travelers, ats: workday, url: https://travelers.wd5.myworkdayjobs.com/External }
   - { name: US Bank, ats: workday, url: https://usbank.wd1.myworkdayjobs.com/US_Bank_Careers }
   - { name: Workday, ats: workday, url: https://workday.wd5.myworkdayjobs.com/Workday }
+
+  # Boston / southern NH employers (Fidelity, State Street, Thermo Fisher, Moderna and Toast are above)
+  - { name: Mass General Brigham, ats: workday, url: https://massgeneralbrigham.wd1.myworkdayjobs.com/MGBExternal }
+  - { name: Beth Israel Lahey Health, ats: workday, url: https://bilh.wd1.myworkdayjobs.com/External }
+  - { name: Blue Cross Blue Shield of Massachusetts, ats: workday, url: https://bcbsma.wd5.myworkdayjobs.com/BCBSMA }
+  - { name: Biogen, ats: workday, url: https://biibhr.wd3.myworkdayjobs.com/external }
+  - { name: Philips, ats: workday, url: https://philips.wd3.myworkdayjobs.com/jobs-and-careers }
+  - { name: RTX, ats: workday, url: https://globalhr.wd5.myworkdayjobs.com/REC_RTX_Ext_Gateway }
+  - { name: Analog Devices, ats: workday, url: https://analogdevices.wd1.myworkdayjobs.com/External }
+  - { name: PTC, ats: workday, url: https://ptc.wd1.myworkdayjobs.com/PTC }
+  - { name: TJX Companies, ats: workday, url: https://tjx.wd1.myworkdayjobs.com/TJX_EXTERNAL }
+  - { name: John Hancock, ats: workday, url: https://manulife.wd3.myworkdayjobs.com/MFCJH_Jobs }
+  - { name: Wellington Management, ats: workday, url: https://wellington.wd5.myworkdayjobs.com/External }
+  - { name: VF Corporation, ats: workday, url: https://vfc.wd5.myworkdayjobs.com/vfc_careers }
+  - { name: Chewy, ats: workday, url: https://chewy.wd5.myworkdayjobs.com/External }
+  - { name: WEX, ats: workday, url: https://wexinc.wd5.myworkdayjobs.com/WEXInc }
+  - { name: Klaviyo, ats: greenhouse, token: klaviyo }
+  - { name: CarGurus, ats: greenhouse, token: cargurus }
+  - { name: Ginkgo Bioworks, ats: greenhouse, token: ginkgobioworks }

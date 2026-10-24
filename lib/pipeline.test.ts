@@ -159,6 +159,7 @@ describe("prefilter", () => {
     expect(pf("Enablement Business Partner", "competency").pass).toBe(false);
     expect(pf("Machine Learning Engineer, Post Training").pass).toBe(false);
     expect(pf("Senior Instructional Designer", "LMS").pass).toBe(false);
+    expect(pf("Store Manager in Training", "coaching and onboarding program").pass).toBe(false);
   });
   it("catches an odd title when the description is clearly L&D", () => {
     const body = "Own the LMS, instructional design, needs analysis, Kirkpatrick evaluation and leadership development.";

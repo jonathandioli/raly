@@ -25,6 +25,8 @@ const TITLE_NOT_LD = [
   // Sales/GTM enablement trains revenue teams; out of scope for an L&D/talent search.
   "sales", "gtm", "go to market", "revenue", "field", "partner", "partnerships", "commercial",
   "product manager", "product designer", "marketing", "content", "generalist", "quality",
+  // Retail "manager in training" programs are trainee roles, not L&D.
+  "in training", "trainee", "store", "assistant store manager",
 ];
 
 const SENIORITY = ["manager", "senior manager", "director", "associate director", "senior director", "head", "lead", "leader", "principal", "business partner"];
@@ -52,6 +54,13 @@ export interface PrefilterResult {
   titleDomain: string[];
   bodyHits: string[];
   reason: string;
+}
+
+/** Title-only version of the screen, for sources where fetching a description costs a request. */
+export function titleLooksRelevant(rawTitle: string): boolean {
+  const title = normTitle(rawTitle);
+  if (TITLE_NOT_LD.some((t) => hasPhrase(title, t))) return false;
+  return TITLE_DOMAIN.some((t) => hasPhrase(title, t)) && SENIORITY.some((s) => hasPhrase(title, s));
 }
 
 export function prefilter(p: Pick<Posting, "title" | "descriptionText">): PrefilterResult {

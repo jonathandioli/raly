@@ -1,4 +1,5 @@
-import type { TargetCompany } from "../config";
+/** A company on a token-addressed board (Greenhouse, Lever, Ashby). */
+type BoardCompany = { name: string; token: string };
 import { getJson } from "../http";
 import type { RawPosting } from "../types";
 
@@ -13,7 +14,7 @@ interface GreenhouseJob {
   content?: string;
 }
 
-export async function fetchGreenhouse(c: TargetCompany): Promise<RawPosting[]> {
+export async function fetchGreenhouse(c: BoardCompany): Promise<RawPosting[]> {
   const data = await getJson<{ jobs: GreenhouseJob[] }>(
     `https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(c.token)}/jobs?content=true`,
   );
@@ -41,7 +42,7 @@ interface LeverJob {
   salaryRange?: { min?: number; max?: number; currency?: string; interval?: string };
 }
 
-export async function fetchLever(c: TargetCompany): Promise<RawPosting[]> {
+export async function fetchLever(c: BoardCompany): Promise<RawPosting[]> {
   const jobs = await getJson<LeverJob[]>(`https://api.lever.co/v0/postings/${encodeURIComponent(c.token)}?mode=json`);
   return jobs.map((j) => ({
     source: "lever",
@@ -86,7 +87,7 @@ interface AshbyJob {
   };
 }
 
-export async function fetchAshby(c: TargetCompany): Promise<RawPosting[]> {
+export async function fetchAshby(c: BoardCompany): Promise<RawPosting[]> {
   const data = await getJson<{ jobs: AshbyJob[] }>(
     `https://api.ashbyhq.com/posting-api/job-board/${encodeURIComponent(c.token)}?includeCompensation=true`,
   );

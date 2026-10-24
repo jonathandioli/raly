@@ -1,11 +1,13 @@
 # Companies whose public ATS job boards are read directly (no key needed).
 # token = the board slug in the company's careers URL:
 #   greenhouse: boards.greenhouse.io/<token>   lever: jobs.lever.co/<token>   ashby: jobs.ashbyhq.com/<token>
-# Tokens below are a starting seed and not all are verified. A wrong token shows up
-# in the run footer as a 404 for that company; fix or delete it.
+#   workday: the full career-site URL, e.g. https://acme.wd5.myworkdayjobs.com/External
+# Every entry below answered on 2026-10-24. A company that later moves or renames its
+# board shows up in the run footer as an HTTP error; fix or delete it.
 # Swap in the companies the candidate actually wants to work for.
 
 companies:
+  # Tech companies on Greenhouse / Lever / Ashby
   - { name: Airbnb, ats: greenhouse, token: airbnb }
   - { name: Stripe, ats: greenhouse, token: stripe }
   - { name: Dropbox, ats: greenhouse, token: dropbox }
@@ -32,13 +34,11 @@ companies:
   - { name: Samsara, ats: greenhouse, token: samsara }
   - { name: Toast, ats: greenhouse, token: toast }
   - { name: Anthropic, ats: greenhouse, token: anthropic }
-  - { name: Grammarly, ats: greenhouse, token: grammarly }
   - { name: Calendly, ats: greenhouse, token: calendly }
   - { name: Zscaler, ats: greenhouse, token: zscaler }
   - { name: Peloton, ats: greenhouse, token: peloton }
   - { name: Palantir, ats: lever, token: palantir }
   - { name: Spotify, ats: lever, token: spotify }
-  - { name: Plaid, ats: lever, token: plaid }
   - { name: Wealthfront, ats: lever, token: wealthfront }
   - { name: Highspot, ats: lever, token: highspot }
   - { name: OpenAI, ats: ashby, token: openai }
@@ -48,3 +48,54 @@ companies:
   - { name: Vercel, ats: ashby, token: vercel }
   - { name: Deel, ats: ashby, token: deel }
   - { name: Docker, ats: ashby, token: docker }
+
+  # Large employers on Workday: big US companies across healthcare, pharma, finance,
+  # retail and industry, where dedicated L&D and talent teams are the norm.
+  - { name: 3M, ats: workday, url: https://3m.wd1.myworkdayjobs.com/Search }
+  - { name: "AT&T", ats: workday, url: https://att.wd1.myworkdayjobs.com/ATTGeneral }
+  - { name: Abbott, ats: workday, url: https://abbott.wd5.myworkdayjobs.com/abbottcareers }
+  - { name: Accenture, ats: workday, url: https://accenture.wd103.myworkdayjobs.com/AccentureCareers }
+  - { name: Adobe, ats: workday, url: https://adobe.wd5.myworkdayjobs.com/external_experienced }
+  - { name: AstraZeneca, ats: workday, url: https://astrazeneca.wd3.myworkdayjobs.com/Careers }
+  - { name: Bank of America, ats: workday, url: https://ghr.wd1.myworkdayjobs.com/lateral-us }
+  - { name: BlackRock, ats: workday, url: https://blackrock.wd1.myworkdayjobs.com/BlackRock_Professional }
+  - { name: Boeing, ats: workday, url: https://boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS }
+  - { name: CVS Health, ats: workday, url: https://cvshealth.wd1.myworkdayjobs.com/CVS_Health_Careers }
+  - { name: Capital One, ats: workday, url: https://capitalone.wd12.myworkdayjobs.com/Capital_One }
+  - { name: Chevron, ats: workday, url: https://chevron.wd5.myworkdayjobs.com/jobs }
+  - { name: Cigna, ats: workday, url: https://cigna.wd5.myworkdayjobs.com/cignacareers }
+  - { name: Cleveland Clinic, ats: workday, url: https://ccf.wd1.myworkdayjobs.com/ClevelandClinicCareers }
+  - { name: Disney, ats: workday, url: https://disney.wd5.myworkdayjobs.com/disneycareer }
+  - { name: Elevance Health, ats: workday, url: https://elevancehealth.wd1.myworkdayjobs.com/ANT }
+  - { name: Fidelity, ats: workday, url: https://fmr.wd1.myworkdayjobs.com/FidelityCareers }
+  - { name: GE HealthCare, ats: workday, url: https://gehc.wd5.myworkdayjobs.com/GEHC_ExternalSite }
+  - { name: Gap Inc., ats: workday, url: https://gapinc.wd1.myworkdayjobs.com/GAPINC }
+  - { name: Gilead, ats: workday, url: https://gilead.wd1.myworkdayjobs.com/gileadcareers }
+  - { name: HP, ats: workday, url: https://hp.wd5.myworkdayjobs.com/ExternalCareerSite }
+  - { name: Home Depot, ats: workday, url: https://homedepot.wd5.myworkdayjobs.com/CareerDepot }
+  - { name: Humana, ats: workday, url: https://humana.wd5.myworkdayjobs.com/Humana_External_Career_Site }
+  - { name: Intel, ats: workday, url: https://intel.wd1.myworkdayjobs.com/External }
+  - { name: "Johnson & Johnson", ats: workday, url: https://jj.wd5.myworkdayjobs.com/JJ }
+  - { name: Lowe's, ats: workday, url: https://lowes.wd5.myworkdayjobs.com/LWS_External_CS }
+  - { name: Mastercard, ats: workday, url: https://mastercard.wd1.myworkdayjobs.com/CorporateCareers }
+  - { name: Medtronic, ats: workday, url: https://medtronic.wd1.myworkdayjobs.com/MedtronicCareers }
+  - { name: Merck, ats: workday, url: https://msd.wd5.myworkdayjobs.com/SearchJobs }
+  - { name: Moderna, ats: workday, url: https://modernatx.wd1.myworkdayjobs.com/M_tx }
+  - { name: Morgan Stanley, ats: workday, url: https://ms.wd5.myworkdayjobs.com/External }
+  - { name: NVIDIA, ats: workday, url: https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite }
+  - { name: Nike, ats: workday, url: https://nike.wd1.myworkdayjobs.com/nke }
+  - { name: Northrop Grumman, ats: workday, url: https://ngc.wd1.myworkdayjobs.com/Northrop_Grumman_External_Site }
+  - { name: Novartis, ats: workday, url: https://novartis.wd3.myworkdayjobs.com/Novartis_Careers }
+  - { name: PNC, ats: workday, url: https://pnc.wd5.myworkdayjobs.com/External }
+  - { name: Pfizer, ats: workday, url: https://pfizer.wd1.myworkdayjobs.com/PfizerCareers }
+  - { name: Prudential, ats: workday, url: https://pru.wd5.myworkdayjobs.com/Careers }
+  - { name: PwC, ats: workday, url: https://pwc.wd3.myworkdayjobs.com/Global_Experienced_Careers }
+  - { name: Salesforce, ats: workday, url: https://salesforce.wd12.myworkdayjobs.com/External_Career_Site }
+  - { name: Sanofi, ats: workday, url: https://sanofi.wd3.myworkdayjobs.com/SanofiCareers }
+  - { name: State Street, ats: workday, url: https://statestreet.wd1.myworkdayjobs.com/Global }
+  - { name: T-Mobile, ats: workday, url: https://tmobile.wd1.myworkdayjobs.com/External }
+  - { name: Target, ats: workday, url: https://target.wd5.myworkdayjobs.com/targetcareers }
+  - { name: Thermo Fisher, ats: workday, url: https://thermofisher.wd5.myworkdayjobs.com/ThermoFisherCareers }
+  - { name: Travelers, ats: workday, url: https://travelers.wd5.myworkdayjobs.com/External }
+  - { name: US Bank, ats: workday, url: https://usbank.wd1.myworkdayjobs.com/US_Bank_Careers }
+  - { name: Workday, ats: workday, url: https://workday.wd5.myworkdayjobs.com/Workday }

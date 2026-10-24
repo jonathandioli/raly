@@ -54,6 +54,7 @@ const ConfigSchema = z.object({
     greenhouse: SourceToggle,
     lever: SourceToggle,
     ashby: SourceToggle,
+    workday: SourceToggle.default({ enabled: true }),
     serpapi: SourceToggle.extend({ max_queries_per_run: z.number().default(3) }),
     jsearch: SourceToggle.extend({ max_queries_per_run: z.number().default(5) }),
     usajobs: SourceToggle,
@@ -63,7 +64,11 @@ const ConfigSchema = z.object({
 
 const CompaniesSchema = z.object({
   companies: z.array(
-    z.object({ name: z.string(), ats: z.enum(["greenhouse", "lever", "ashby"]), token: z.string() }),
+    z.union([
+      z.object({ name: z.string(), ats: z.enum(["greenhouse", "lever", "ashby"]), token: z.string() }),
+      // Workday has no board token; the career site URL carries host, tenant and site.
+      z.object({ name: z.string(), ats: z.literal("workday"), url: z.string().url() }),
+    ]),
   ),
 });
 

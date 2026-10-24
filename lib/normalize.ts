@@ -50,7 +50,7 @@ export function detectRemote(raw: Pick<RawPosting, "workplace" | "location" | "t
   if (w.includes("onsite") || w.includes("on-site") || w.includes("in office")) return "onsite";
   const text = `${raw.location} ${raw.title}`.toLowerCase();
   if (text.includes("hybrid")) return "hybrid";
-  if (/remote|work from home|wfh|anywhere/.test(text)) return "remote";
+  if (/remote|virtual|work from home|wfh|anywhere/.test(text)) return "remote";
   if (REMOTE_IN_BODY.test(descriptionText)) return "remote";
   return raw.location ? "onsite" : "unknown";
 }

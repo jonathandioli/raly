@@ -1,0 +1,105 @@
+# Target profile, scoring weights, sources and email.
+# Every value here is read on each run; edit, commit, and the next run picks it up.
+
+candidate:
+  timezone: America/New_York # used for "posted N days ago" and the Monday digest
+
+profile:
+  # A title qualifies on a full match (all words present, any order) of one of these...
+  title_keywords:
+    - Learning & Development Manager
+    - Sr. Manager L&D
+    - Director of Learning
+    - Head of L&D
+    - Talent Development Manager
+    - Learning Experience Manager
+    - Enablement Manager
+  # ...or a half-credit match of these adjacent titles.
+  adjacent_title_keywords:
+    - Training Manager
+    - Learning Program Manager
+    - Leadership Development Manager
+    - Organizational Development Manager
+    - People Development Manager
+    - Sales Enablement Manager
+  # Fallback: any title with one of these domain terms plus a seniority term gets half credit.
+  domain_terms:
+    - learning
+    - talent development
+    - enablement
+    - training
+    - leadership development
+    - people development
+    - organizational development
+  seniority: [Manager, Senior Manager, Associate Director, Director, Head]
+  excluded_titles: # hard reject, whole-word match
+    - Coordinator
+    - Specialist
+    - Instructional Designer I
+    - Instructional Designer II
+    - VP
+    - Vice President
+    - Chief Learning Officer
+    - Intern
+    - Internship
+    - Machine Learning
+    - Deep Learning
+  salary:
+    target: 150000
+    sweet_min: 140000 # full points if the range overlaps sweet_min..sweet_max
+    sweet_max: 165000
+    min: 130000 # partial points if it overlaps min..max
+    max: 175000
+    floor: 120000 # 0 points if the posted max is below this
+  locations:
+    remote_us: true
+    # Add the candidate's metro (any substring of a posting's location), e.g. ["New York", "NYC", "Brooklyn"].
+    # Hybrid/on-site roles only pass when they match one of these.
+    metros: []
+  posted_within_days: 7
+  skills:
+    - LMS
+    - leadership development
+    - instructional design
+    - needs analysis
+    - Kirkpatrick
+    - onboarding
+    - coaching
+    - budget
+    - people management
+  company_blocklist: []
+
+# Queries run once per title keyword x search location against the keyword-search sources.
+search_locations: [Remote]
+
+weights:
+  semantic: 35
+  title: 20
+  salary: 20
+  skills: 15
+  freshness: 10
+
+penalties:
+  skipped_near_duplicate: 10 # points off a role resembling one you skipped at the same company
+
+report:
+  top_n: 15
+  weekly_digest_day: Monday
+  weekly_digest_min_score: 60
+
+scoring:
+  model: claude-haiku-5-5
+  concurrency: 5
+  max_llm_calls_per_run: 150
+
+sources:
+  adzuna: { enabled: true, country: us, results_per_page: 50 }
+  greenhouse: { enabled: true }
+  lever: { enabled: true }
+  ashby: { enabled: true }
+  serpapi: { enabled: false, max_queries_per_run: 3 } # free tier is ~100 searches/month
+  jsearch: { enabled: false, max_queries_per_run: 5 }
+  usajobs: { enabled: false }
+
+email:
+  subject_prefix: L&D roles

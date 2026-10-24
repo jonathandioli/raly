@@ -1,0 +1,50 @@
+# Companies whose public ATS job boards are read directly (no key needed).
+# token = the board slug in the company's careers URL:
+#   greenhouse: boards.greenhouse.io/<token>   lever: jobs.lever.co/<token>   ashby: jobs.ashbyhq.com/<token>
+# Tokens below are a starting seed and not all are verified. A wrong token shows up
+# in the run footer as a 404 for that company; fix or delete it.
+# Swap in the companies the candidate actually wants to work for.
+
+companies:
+  - { name: Airbnb, ats: greenhouse, token: airbnb }
+  - { name: Stripe, ats: greenhouse, token: stripe }
+  - { name: Dropbox, ats: greenhouse, token: dropbox }
+  - { name: Figma, ats: greenhouse, token: figma }
+  - { name: Duolingo, ats: greenhouse, token: duolingo }
+  - { name: Pinterest, ats: greenhouse, token: pinterest }
+  - { name: Reddit, ats: greenhouse, token: reddit }
+  - { name: Coinbase, ats: greenhouse, token: coinbase }
+  - { name: Robinhood, ats: greenhouse, token: robinhood }
+  - { name: Instacart, ats: greenhouse, token: instacart }
+  - { name: Lyft, ats: greenhouse, token: lyft }
+  - { name: GitLab, ats: greenhouse, token: gitlab }
+  - { name: Twilio, ats: greenhouse, token: twilio }
+  - { name: Datadog, ats: greenhouse, token: datadog }
+  - { name: Cloudflare, ats: greenhouse, token: cloudflare }
+  - { name: MongoDB, ats: greenhouse, token: mongodb }
+  - { name: Elastic, ats: greenhouse, token: elastic }
+  - { name: Squarespace, ats: greenhouse, token: squarespace }
+  - { name: Asana, ats: greenhouse, token: asana }
+  - { name: Affirm, ats: greenhouse, token: affirm }
+  - { name: Gusto, ats: greenhouse, token: gusto }
+  - { name: Okta, ats: greenhouse, token: okta }
+  - { name: Databricks, ats: greenhouse, token: databricks }
+  - { name: Samsara, ats: greenhouse, token: samsara }
+  - { name: Toast, ats: greenhouse, token: toast }
+  - { name: Anthropic, ats: greenhouse, token: anthropic }
+  - { name: Grammarly, ats: greenhouse, token: grammarly }
+  - { name: Calendly, ats: greenhouse, token: calendly }
+  - { name: Zscaler, ats: greenhouse, token: zscaler }
+  - { name: Peloton, ats: greenhouse, token: peloton }
+  - { name: Palantir, ats: lever, token: palantir }
+  - { name: Spotify, ats: lever, token: spotify }
+  - { name: Plaid, ats: lever, token: plaid }
+  - { name: Wealthfront, ats: lever, token: wealthfront }
+  - { name: Highspot, ats: lever, token: highspot }
+  - { name: OpenAI, ats: ashby, token: openai }
+  - { name: Notion, ats: ashby, token: notion }
+  - { name: Ramp, ats: ashby, token: ramp }
+  - { name: Linear, ats: ashby, token: linear }
+  - { name: Vercel, ats: ashby, token: vercel }
+  - { name: Deel, ats: ashby, token: deel }
+  - { name: Docker, ats: ashby, token: docker }

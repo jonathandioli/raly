@@ -13,7 +13,6 @@ profile:
     - Head of L&D
     - Talent Development Manager
     - Learning Experience Manager
-    - Enablement Manager
   # ...or a half-credit match of these adjacent titles.
   adjacent_title_keywords:
     - Training Manager
@@ -21,12 +20,10 @@ profile:
     - Leadership Development Manager
     - Organizational Development Manager
     - People Development Manager
-    - Sales Enablement Manager
   # Fallback: any title with one of these domain terms plus a seniority term gets half credit.
   domain_terms:
     - learning
     - talent development
-    - enablement
     - training
     - leadership development
     - people development
@@ -44,6 +41,13 @@ profile:
     - Internship
     - Machine Learning
     - Deep Learning
+    # Enablement roles train sales/customer/partner teams, not employees broadly.
+    - Sales Enablement
+    - GTM Enablement
+    - Customer Enablement
+    - Field Enablement
+    - Partner Enablement
+    - Revenue Enablement
   salary:
     target: 150000
     sweet_min: 140000 # full points if the range overlaps sweet_min..sweet_max

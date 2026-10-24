@@ -4,6 +4,7 @@ import { parseConfig } from "./config";
 import { dedupe } from "./dedupe";
 import { applyFilters, isNonUs, matchTitle, rejectReason } from "./filter";
 import { normalize, parseSalary } from "./normalize";
+import { prefilter } from "./prefilter";
 import { renderHtml, renderMarkdown } from "./report";
 import { salaryPoints, scorePosting } from "./score";
 import { relativeDate } from "./sources/search";
@@ -103,6 +104,13 @@ describe("filter", () => {
     expect(at({ location: "Remote - Canada" })).toBe("location");
     expect(at({ location: "Chicago, IL" })).toBe("location");
   });
+  it("rejects sales/customer enablement but keeps talent roles", () => {
+    const at = (title: string) => rejectReason(normalize(raw({ title }), NOW), config, NOW);
+    expect(at("Sales Enablement Manager")).toBe("excluded_title");
+    expect(at("Senior Customer Enablement Manager")).toBe("excluded_title");
+    expect(at("Enablement Manager")).toBe("title");
+    expect(at("Director, Talent Development")).toBeNull();
+  });
   it("does not treat 'internal' as 'intern'", () => {
     expect(rejectReason(normalize(raw({ title: "Manager, Internal Learning & Development" }), NOW), config, NOW)).toBeNull();
   });
@@ -134,6 +142,26 @@ describe("score", () => {
     expect(a.score).toBeLessThanOrEqual(100);
     const penalized = scorePosting(strong, { score: 9, reason: "", red_flags: [] }, config, [{ company: "Acme", title: "Senior Manager, Learning and Development" }], NOW);
     expect(penalized.score).toBe(a.score - 10);
+  });
+});
+
+describe("prefilter", () => {
+  const pf = (title: string, descriptionText = "") => prefilter({ title, descriptionText });
+  it("passes L&D and talent roles at manager+ level", () => {
+    expect(pf("Senior Leadership Development Manager").pass).toBe(true);
+    expect(pf("Head of Talent Experience & Enablement").pass).toBe(true);
+    expect(pf("People Programs Lead", "Design our onboarding program and career development paths.").pass).toBe(true);
+  });
+  it("drops sales/GTM enablement, engineers, and non-manager roles", () => {
+    expect(pf("Principal, Sales Enablement", "LMS and curriculum").pass).toBe(false);
+    expect(pf("GTM Motions & Skills Enablement Lead", "facilitation").pass).toBe(false);
+    expect(pf("Enablement Business Partner", "competency").pass).toBe(false);
+    expect(pf("Machine Learning Engineer, Post Training").pass).toBe(false);
+    expect(pf("Senior Instructional Designer", "LMS").pass).toBe(false);
+  });
+  it("catches an odd title when the description is clearly L&D", () => {
+    const body = "Own the LMS, instructional design, needs analysis, Kirkpatrick evaluation and leadership development.";
+    expect(pf("Manager, People Experience", body).pass).toBe(true);
   });
 });
 

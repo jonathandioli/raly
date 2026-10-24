@@ -1,21 +1,20 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { SESSION_COOKIE, safeEqual, sessionToken } from "@/lib/auth";
 
-// Password gate for the dashboard. Set DASHBOARD_PASSWORD on Vercel; the browser shows a
-// Basic-auth prompt and any username works. The cron route checks CRON_SECRET itself.
+// Password gate for the dashboard. Set DASHBOARD_PASSWORD on Vercel; visitors without the
+// session cookie are sent to /login. The cron route checks CRON_SECRET itself.
 export function proxy(req: NextRequest) {
   const password = process.env.DASHBOARD_PASSWORD;
   if (!password) return NextResponse.next();
-  const [scheme, encoded] = (req.headers.get("authorization") ?? "").split(" ");
-  if (scheme === "Basic" && encoded) {
-    const decoded = atob(encoded);
-    if (decoded.slice(decoded.indexOf(":") + 1) === password) return NextResponse.next();
-  }
-  return new NextResponse("Authentication required", {
-    status: 401,
-    headers: { "WWW-Authenticate": 'Basic realm="Raly"' },
-  });
+  const cookie = req.cookies.get(SESSION_COOKIE)?.value ?? "";
+  if (cookie && safeEqual(cookie, sessionToken(password))) return NextResponse.next();
+
+  const login = new URL("/login", req.url);
+  const next = req.nextUrl.pathname + req.nextUrl.search;
+  if (next !== "/") login.searchParams.set("next", next);
+  return NextResponse.redirect(login);
 }
 
 export const config = {
-  matcher: ["/((?!api/cron|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!login|api/cron|_next/static|_next/image|favicon.ico).*)"],
 };

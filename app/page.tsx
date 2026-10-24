@@ -39,7 +39,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
     <main className="mx-auto max-w-3xl px-4 py-8 sm:py-12">
       <header className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-6">
         <div>
-          <h1 className="font-serif text-3xl font-semibold tracking-tight">Raly</h1>
+          <h1 className="font-serif text-3xl font-semibold tracking-tight">Aly&apos;s Rally</h1>
           <p className="mt-1 text-sm text-muted">
             {last ? (
               <>
@@ -170,7 +170,7 @@ function Runs({ runs, tz }: { runs: RunRow[]; tz: string }) {
 function Setup() {
   return (
     <main className="mx-auto max-w-xl px-4 py-16">
-      <h1 className="font-serif text-3xl font-semibold">Raly</h1>
+      <h1 className="font-serif text-3xl font-semibold">Aly&apos;s Rally</h1>
       <p className="mt-4 text-muted">
         Connect a Postgres database to start: set <code className="text-ink">DATABASE_URL</code> (Neon or Supabase both work)
         and redeploy. The schema is created on the first run.

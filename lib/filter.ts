@@ -21,7 +21,7 @@ const NON_US = [
   "germany", "berlin", "munich", "france", "paris", "spain", "madrid", "barcelona", "netherlands", "amsterdam",
   "poland", "warsaw", "portugal", "lisbon", "india", "bangalore", "bengaluru", "hyderabad", "pune", "singapore",
   "australia", "sydney", "melbourne", "japan", "tokyo", "mexico", "brazil", "argentina", "colombia", "philippines",
-  "israel", "tel aviv", "emea", "apac", "latam", "europe", "asia",
+  "israel", "tel aviv", "emea", "apac", "latam", "europe", "asia", "international",
 ];
 
 export function isNonUs(location: string): boolean {

@@ -55,6 +55,8 @@ const ConfigSchema = z.object({
     lever: SourceToggle,
     ashby: SourceToggle,
     workday: SourceToggle.default({ enabled: true }),
+    oracle: SourceToggle.default({ enabled: true }),
+    careersite: SourceToggle.default({ enabled: true }),
     serpapi: SourceToggle.extend({ max_queries_per_run: z.number().default(3) }),
     jsearch: SourceToggle.extend({ max_queries_per_run: z.number().default(5) }),
     usajobs: SourceToggle,
@@ -68,6 +70,10 @@ const CompaniesSchema = z.object({
       z.object({ name: z.string(), ats: z.enum(["greenhouse", "lever", "ashby"]), token: z.string() }),
       // Workday has no board token; the career site URL carries host, tenant and site.
       z.object({ name: z.string(), ats: z.literal("workday"), url: z.string().url() }),
+      // Oracle Recruiting Cloud: the Candidate Experience site URL (…/hcmUI/CandidateExperience/en/sites/<site>).
+      z.object({ name: z.string(), ats: z.literal("oracle"), url: z.string().url() }),
+      // Any career site with a sitemap and schema.org JobPosting pages (SuccessFactors, Avature, Phenom…).
+      z.object({ name: z.string(), ats: z.literal("sitemap"), url: z.string().url() }),
     ]),
   ),
 });

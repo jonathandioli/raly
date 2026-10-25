@@ -152,3 +152,27 @@ companies:
   - { name: Pluralsight, ats: workday, url: https://pluralsight.wd1.myworkdayjobs.com/Careers }
   - { name: Skillsoft, ats: greenhouse, token: skillsoft }
   - { name: Udemy, ats: greenhouse, token: udemy }
+
+  # Oracle Recruiting Cloud: the Candidate Experience site URL
+  - { name: Marriott International, ats: oracle, url: https://ejwl.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX }
+  - { name: Hilton, ats: oracle, url: https://efet.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1 }
+  - { name: Staples, ats: oracle, url: https://fa-exhh-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/StaplesInc }
+
+  # Career sites read via sitemap + schema.org JobPosting pages (SuccessFactors, Avature, Phenom…)
+  - { name: EY, ats: sitemap, url: https://careers.ey.com }
+  - { name: Boston Scientific, ats: sitemap, url: https://jobs.bostonscientific.com }
+  - { name: Takeda, ats: sitemap, url: https://jobs.takeda.com }
+  - { name: Boston Consulting Group, ats: sitemap, url: https://careers.bcg.com }
+  - { name: Bayer, ats: sitemap, url: https://jobs.bayer.com }
+  - { name: AbbVie, ats: sitemap, url: https://careers.abbvie.com }
+  - { name: Eli Lilly, ats: sitemap, url: https://careers.lilly.com }
+  - { name: Novo Nordisk, ats: sitemap, url: https://careers.novonordisk.com }
+  - { name: Regeneron, ats: sitemap, url: https://careers.regeneron.com }
+  - { name: BAE Systems, ats: sitemap, url: https://jobs.baesystems.com }
+  - { name: Tufts Medicine, ats: sitemap, url: https://careers.tuftsmedicine.org }
+  - { name: Eversource, ats: sitemap, url: https://jobs.eversource.com }
+  - { name: National Grid, ats: sitemap, url: https://jobs.nationalgrid.com }
+  - { name: Keurig Dr Pepper, ats: sitemap, url: https://careers.keurigdrpepper.com }
+  - { name: Rapid7, ats: sitemap, url: https://careers.rapid7.com }
+  - { name: HMH, ats: sitemap, url: https://careers.hmhco.com }
+  - { name: Southwest Airlines, ats: sitemap, url: https://careers.southwestair.com }

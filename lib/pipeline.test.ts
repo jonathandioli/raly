@@ -8,6 +8,7 @@ import { prefilter } from "./prefilter";
 import { renderHtml, renderMarkdown } from "./report";
 import { salaryPoints, scorePosting } from "./score";
 import { relativeDate } from "./sources/search";
+import { parseJobPage, parseRobots, titleFromUrl } from "./sources/sitemap";
 import { htmlToText, normTitle, ratio } from "./text";
 import type { RawPosting } from "./types";
 
@@ -193,6 +194,28 @@ describe("prefilter", () => {
   it("catches an odd title when the description is clearly L&D", () => {
     const body = "Own the LMS, instructional design, needs analysis, Kirkpatrick evaluation and leadership development.";
     expect(pf("Manager, People Experience", body).pass).toBe(true);
+  });
+});
+
+describe("career-site sitemaps", () => {
+  it("reads robots rules for every user agent", () => {
+    const r = parseRobots("User-agent: *\nDisallow: /services/\nUser-agent: badbot\nDisallow: /\nSitemap: https://x.test/sitemap.xml");
+    expect(r.disallow).toEqual(["/services/"]);
+    expect(r.sitemaps).toEqual(["https://x.test/sitemap.xml"]);
+  });
+  it("guesses a title from a job URL", () => {
+    expect(titleFromUrl("https://jobs.takeda.com/job/boston/head-of-learning-and-development/1113/9785")).toBe("boston head of learning and development");
+  });
+  it("parses schema.org JobPosting JSON-LD", () => {
+    const html = `<script type="application/ld+json">{"@context":"https://schema.org","@type":"JobPosting","title":"Director, Talent Development","datePosted":"2026-10-20","jobLocation":{"@type":"Place","address":{"addressLocality":"Cambridge","addressRegion":"MA","addressCountry":"US"}},"baseSalary":{"currency":"USD","value":{"minValue":150000,"maxValue":180000,"unitText":"YEAR"}},"description":"<p>Lead L&amp;D</p>"}</script>`;
+    const j = parseJobPage(html)!;
+    expect(j.title).toBe("Director, Talent Development");
+    expect(j.location).toBe("Cambridge, MA");
+    expect(j.salaryMin).toBe(150000);
+  });
+  it("marks non-US JobPosting locations as international", () => {
+    const html = `<script type="application/ld+json">{"@type":"JobPosting","title":"Head of L&D","jobLocation":{"address":{"addressLocality":"Dublin","addressCountry":"IE"}}}</script>`;
+    expect(parseJobPage(html)!.location).toBe("Dublin, International (IE)");
   });
 });
 

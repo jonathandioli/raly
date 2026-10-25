@@ -1,16 +1,13 @@
 import { USER_AGENT, getJson, pMap } from "../http";
 import { titleLooksRelevant } from "../prefilter";
+import type { Keywords } from "../config";
 import type { RawPosting } from "../types";
 
 // Workday career sites (most large employers) serve a public JSON API behind every
 // <tenant>.wdN.myworkdayjobs.com/<site> page. Its search is a loose keyword OR, and a big
-// employer lists thousands of jobs, so: search a few L&D terms, screen titles, and fetch
+// employer lists thousands of jobs, so: run the configured search terms, screen titles, and fetch
 // full details only for the survivors.
 
-const SEARCHES = [
-  "learning development", "training", "talent development", "leadership development", "organizational development",
-  "instructional design", "university relations", "early careers", "campus recruiting", "internship program", "onboarding",
-];
 const PAGE = 20; // Workday's maximum page size
 const PAGES_PER_SEARCH = 1; // results are relevance-sorted; one page keeps ~80 employers inside Vercel's 5-minute limit
 
@@ -66,15 +63,15 @@ function workplace(remoteType?: string): string | null {
   return null;
 }
 
-export async function fetchWorkday(company: { name: string; url: string }): Promise<RawPosting[]> {
+export async function fetchWorkday(company: { name: string; url: string }, kw: Keywords): Promise<RawPosting[]> {
   const { base, tenant, site } = parseWorkdayUrl(company.url);
   const api = `${base}/wday/cxs/${tenant}/${site}`;
 
   const paths = new Map<string, string>(); // externalPath -> title
-  for (const searchText of SEARCHES) {
+  for (const searchText of kw.search_terms) {
     for (let page = 0; page < PAGES_PER_SEARCH; page++) {
       const r = await postJson<SearchResponse>(`${api}/jobs`, { appliedFacets: {}, limit: PAGE, offset: page * PAGE, searchText });
-      for (const j of r.jobPostings ?? []) if (j.title && titleLooksRelevant(j.title)) paths.set(j.externalPath, j.title);
+      for (const j of r.jobPostings ?? []) if (j.title && titleLooksRelevant(j.title, kw)) paths.set(j.externalPath, j.title);
       if ((page + 1) * PAGE >= r.total) break;
     }
   }

@@ -1,5 +1,6 @@
 import { USER_AGENT, pMap } from "../http";
 import { titleLooksRelevant } from "../prefilter";
+import type { Keywords } from "../config";
 import type { RawPosting } from "../types";
 import { withCountry } from "./oracle";
 
@@ -165,10 +166,10 @@ function listingLocation(text?: string): string {
   return text;
 }
 
-export async function fetchSitemap(company: { name: string; url: string }): Promise<RawPosting[]> {
+export async function fetchSitemap(company: { name: string; url: string }, kw: Keywords): Promise<RawPosting[]> {
   const base = new URL(company.url).origin;
   const robots = parseRobots((await getText(`${base}/robots.txt`)) ?? "");
-  const listings = (await listJobs(base, robots)).filter((l) => allowed(l.url, robots) && titleLooksRelevant(l.title));
+  const listings = (await listJobs(base, robots)).filter((l) => allowed(l.url, robots) && titleLooksRelevant(l.title, kw));
   if (listings.length > MAX_PAGES) listings.length = MAX_PAGES;
 
   const pages = await pMap(listings, 3, async (l) => {

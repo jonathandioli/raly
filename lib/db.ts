@@ -10,7 +10,7 @@ export function db(): postgres.Sql {
   const url = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
   if (!url) throw new Error("DATABASE_URL is not set");
   // prepare:false keeps it working behind transaction poolers (Supabase, Neon pooled URLs).
-  sql = postgres(url, { prepare: false, max: 5, idle_timeout: 20 });
+  sql = postgres(url, { prepare: false, max: 5, idle_timeout: 20, onnotice: () => {} });
   return sql;
 }
 
@@ -54,6 +54,12 @@ create table if not exists runs (
   report_md text,
   report_html text,
   error text
+);
+
+create table if not exists settings (
+  key text primary key,
+  value jsonb not null,
+  updated_at timestamptz not null default now()
 );
 
 create table if not exists status (

@@ -8,6 +8,7 @@ import { pMap } from "./http";
 import { normalize } from "./normalize";
 import { type ReportItem, renderHtml, renderMarkdown } from "./report";
 import { scorePosting } from "./score";
+import { applyOverrides, getListOverrides } from "./settings";
 import { rateFit, semanticEnabled, semanticHash } from "./semantic";
 import { fetchAll } from "./sources";
 import type { Posting, ScoredPosting, SemanticResult } from "./types";
@@ -81,7 +82,11 @@ export async function runPipeline(opts: RunOptions = {}): Promise<RunResult> {
   const useDb = hasDb();
   const write = useDb && !opts.dryRun;
 
-  if (useDb) await store.ensureSchema();
+  if (useDb) {
+    await store.ensureSchema();
+    // Keyword lists edited on the dashboard replace config.yaml's for this run.
+    applyOverrides(config, await getListOverrides());
+  }
   const runId = write ? await store.startRun(opts.kind ?? "daily") : null;
 
   try {

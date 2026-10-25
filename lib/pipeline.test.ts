@@ -2,7 +2,7 @@ import fs from "node:fs";
 import { describe, expect, it } from "vitest";
 import { parseConfig } from "./config";
 import { dedupe } from "./dedupe";
-import { applyFilters, inMetro, isNonUs, matchTitle, rejectReason } from "./filter";
+import { applyFilters, inMetro, isNonUs, matchesTargetTitle, rejectReason } from "./filter";
 import { normalize, parseSalary } from "./normalize";
 import { prefilter } from "./prefilter";
 import { renderHtml, renderMarkdown } from "./report";
@@ -87,12 +87,11 @@ describe("dedupe", () => {
 });
 
 describe("filter", () => {
-  it("classifies titles", () => {
-    expect(matchTitle("Director of Learning & Development", config.profile)).toBe("exact");
-    expect(matchTitle("Head of L&D", config.profile)).toBe("exact");
-    expect(matchTitle("Training Manager", config.profile)).toBe("adjacent");
-    expect(matchTitle("Manager, Leadership Programs & Learning", config.profile)).toBe("domain");
-    expect(matchTitle("Senior Software Engineer", config.profile)).toBeNull();
+  it("recognizes the target titles in any word order", () => {
+    expect(matchesTargetTitle("Director of Learning & Development", config.profile)).toBe(true);
+    expect(matchesTargetTitle("Head of L&D", config.profile)).toBe(true);
+    expect(matchesTargetTitle("Manager, Talent Development", config.profile)).toBe(true);
+    expect(matchesTargetTitle("Training Manager", config.profile)).toBe(false);
   });
   it("hard-rejects excluded titles, old postings and non-US remote", () => {
     const at = (over: Partial<RawPosting>) => rejectReason(normalize(raw(over), NOW), config, NOW);
@@ -112,7 +111,7 @@ describe("filter", () => {
     expect(at("Sales Enablement Manager")).toBe("excluded_title");
     expect(at("Senior Customer Enablement Manager")).toBe("excluded_title");
     expect(at("Enablement Manager")).toBe("title");
-    expect(at("Senior Software Engineer")).toBe("title");
+    expect(at("Senior Software Engineer")).toBe("excluded_title");
     expect(at("Director, Talent Development")).toBeNull();
   });
   it("keeps internship program roles past the Intern exclusion", () => {

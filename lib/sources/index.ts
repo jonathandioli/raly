@@ -57,6 +57,7 @@ export function buildQueries(profile: Profile): Query[] {
 export async function fetchAll(profile: Profile): Promise<SourceResult[]> {
   const { config, companies } = profile;
   const s = config.sources;
+  const kw = config.keywords;
   const queries = buildQueries(profile);
   const byAts = <A extends TargetCompany["ats"]>(ats: A) =>
     companies.filter((c): c is Extract<TargetCompany, { ats: A }> => c.ats === ats);
@@ -65,11 +66,11 @@ export async function fetchAll(profile: Profile): Promise<SourceResult[]> {
   if (s.greenhouse.enabled) jobs.push(runAts("greenhouse", byAts("greenhouse"), fetchGreenhouse));
   if (s.lever.enabled) jobs.push(runAts("lever", byAts("lever"), fetchLever));
   if (s.ashby.enabled) jobs.push(runAts("ashby", byAts("ashby"), fetchAshby));
-  if (s.workday.enabled) jobs.push(runAts("workday", byAts("workday"), fetchWorkday));
-  if (s.oracle.enabled) jobs.push(runAts("oracle", byAts("oracle"), fetchOracle));
-  if (s.careersite.enabled) jobs.push(runAts("careersite", byAts("sitemap"), fetchSitemap));
-  if (s.eightfold.enabled) jobs.push(runAts("eightfold", byAts("eightfold"), fetchEightfold));
-  if (s.kpmg.enabled) jobs.push(runAts("kpmg", byAts("kpmg"), fetchKpmg));
+  if (s.workday.enabled) jobs.push(runAts("workday", byAts("workday"), (c) => fetchWorkday(c, kw)));
+  if (s.oracle.enabled) jobs.push(runAts("oracle", byAts("oracle"), (c) => fetchOracle(c, kw)));
+  if (s.careersite.enabled) jobs.push(runAts("careersite", byAts("sitemap"), (c) => fetchSitemap(c, kw)));
+  if (s.eightfold.enabled) jobs.push(runAts("eightfold", byAts("eightfold"), (c) => fetchEightfold(c, kw)));
+  if (s.kpmg.enabled) jobs.push(runAts("kpmg", byAts("kpmg"), (c) => fetchKpmg(c, kw)));
   if (s.adzuna.enabled) {
     const opts = { country: s.adzuna.country, perPage: s.adzuna.results_per_page, maxDays: config.profile.posted_within_days };
     jobs.push(runQueries("adzuna", queries, 2, (q) => searchAdzuna(q, opts)));

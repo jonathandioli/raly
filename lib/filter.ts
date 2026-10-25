@@ -1,19 +1,12 @@
 import type { Config } from "./config";
-import { earlyTalentPhrases, prefilter } from "./prefilter";
+import { excludedHits, prefilter } from "./prefilter";
 import { hasPhrase, normCompany, normTitle, titleTokens } from "./text";
 import type { Posting } from "./types";
 
-export type TitleMatch = "exact" | "adjacent" | "domain" | null;
-
-/** How a title relates to the target titles. Exact = every word of a target keyword present, any order. */
-export function matchTitle(title: string, profile: Config["profile"]): TitleMatch {
+/** True when every word of one of the target titles appears in the title, in any order. */
+export function matchesTargetTitle(title: string, profile: Config["profile"]): boolean {
   const tokens = titleTokens(title);
-  const containsAll = (kw: string) => [...titleTokens(kw)].every((t) => tokens.has(t));
-  if (profile.title_keywords.some(containsAll)) return "exact";
-  if (profile.adjacent_title_keywords.some(containsAll)) return "adjacent";
-  const norm = normTitle(title);
-  if (profile.domain_terms.some((d) => hasPhrase(norm, d))) return "domain";
-  return null;
+  return profile.title_keywords.some((kw) => [...titleTokens(kw)].every((t) => tokens.has(t)));
 }
 
 const NON_US = [
@@ -67,13 +60,8 @@ export type RejectReason = "title" | "excluded_title" | "blocklist" | "age" | "l
 export function rejectReason(p: Posting, config: Config, now = new Date()): RejectReason | null {
   const profile = config.profile;
   const norm = normTitle(p.title);
-  // "Internship Program Manager" mustn't trip the "Intern" exclusion: ignore an excluded word
-  // that's part of a matched early-talent phrase.
-  const programs = earlyTalentPhrases(norm);
-  const excluded = profile.excluded_titles.filter((x) => hasPhrase(norm, x) && !programs.some((ph) => hasPhrase(ph, x)));
-  if (excluded.length) return "excluded_title";
-  // The deterministic L&D screen (title + description vocabulary, manager+ level) decides relevance.
-  if (!prefilter(p).pass) return "title";
+  if (excludedHits(norm, config.keywords).length) return "excluded_title";
+  if (!prefilter(p, config.keywords).pass) return "title";
   const company = normCompany(p.company);
   if (profile.company_blocklist.some((b) => normCompany(b) === company)) return "blocklist";
   const posted = p.postedAt ?? p.fetchedAt;

@@ -1,12 +1,12 @@
 import { getJson, pMap } from "../http";
 import { titleLooksRelevant } from "../prefilter";
+import type { Keywords } from "../config";
 import type { RawPosting } from "../types";
 
 // Oracle Recruiting Cloud ("Candidate Experience") sites, e.g.
 // https://ejwl.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX
 // serve a public REST API: keyword search (newest first), then one detail call per job.
 
-const SEARCHES = ["learning", "training", "talent development", "organizational development", "university", "early careers", "onboarding"];
 const PER_SEARCH = 25;
 
 export function parseOracleUrl(url: string): { origin: string; site: string } {
@@ -39,15 +39,15 @@ export function withCountry(location: string, countryCode?: string | null): stri
   return countryCode && countryCode.toUpperCase() !== "US" ? `${location}${location ? ", " : ""}International (${countryCode})` : location;
 }
 
-export async function fetchOracle(company: { name: string; url: string }): Promise<RawPosting[]> {
+export async function fetchOracle(company: { name: string; url: string }, kw: Keywords): Promise<RawPosting[]> {
   const { origin, site } = parseOracleUrl(company.url);
   const api = `${origin}/hcmRestApi/resources/latest`;
 
   const ids = new Map<string, string>();
-  for (const keyword of SEARCHES) {
+  for (const keyword of kw.search_terms) {
     const finder = `findReqs;siteNumber=${site},keyword="${keyword}",limit=${PER_SEARCH},offset=0,sortBy=POSTING_DATES_DESC`;
     const r = await getJson<SearchResponse>(`${api}/recruitingCEJobRequisitions?onlyData=true&expand=requisitionList&finder=${encodeURIComponent(finder)}`);
-    for (const j of r.items?.[0]?.requisitionList ?? []) if (j.Title && titleLooksRelevant(j.Title)) ids.set(j.Id, j.Title);
+    for (const j of r.items?.[0]?.requisitionList ?? []) if (j.Title && titleLooksRelevant(j.Title, kw)) ids.set(j.Id, j.Title);
   }
 
   const details = await pMap([...ids.keys()], 3, async (id) => {

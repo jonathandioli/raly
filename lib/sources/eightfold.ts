@@ -1,13 +1,13 @@
 import { getJson, pMap } from "../http";
 import { titleLooksRelevant } from "../prefilter";
+import type { Keywords } from "../config";
 import type { RawPosting } from "../types";
 
 // Eightfold career sites (e.g. https://searchjobs.libertymutualgroup.com/careers) answer a public
 // /api/apply/v2 API, which their robots.txt explicitly allows. Search is loose and returns 10 per
 // page, so: page through a few newest-first searches, screen titles, fetch full details.
 
-const SEARCHES = ["learning", "training", "talent development", "university", "early careers", "onboarding"];
-const PAGES = 3;
+const PAGES = 2;
 const PER_PAGE = 10; // the API's maximum
 
 interface Position {
@@ -29,16 +29,16 @@ function workplace(option?: string): string | null {
 }
 
 /** The careers URL plus the Eightfold tenant domain, e.g. "libertymutual.com" (from robots.txt / the sitemap). */
-export async function fetchEightfold(company: { name: string; url: string; domain: string }): Promise<RawPosting[]> {
+export async function fetchEightfold(company: { name: string; url: string; domain: string }, kw: Keywords): Promise<RawPosting[]> {
   const origin = new URL(company.url).origin;
   const api = `${origin}/api/apply/v2/jobs`;
 
   const ids = new Set<string>();
-  for (const query of SEARCHES) {
+  for (const query of kw.search_terms) {
     for (let page = 0; page < PAGES; page++) {
       const params = new URLSearchParams({ domain: company.domain, query, start: String(page * PER_PAGE), num: String(PER_PAGE), sort_by: "timestamp" });
       const r = await getJson<{ count: number; positions: Position[] }>(`${api}?${params}`);
-      for (const p of r.positions ?? []) if (p.name && titleLooksRelevant(p.name)) ids.add(String(p.id));
+      for (const p of r.positions ?? []) if (p.name && titleLooksRelevant(p.name, kw)) ids.add(String(p.id));
       if ((page + 1) * PER_PAGE >= r.count) break;
     }
   }

@@ -51,7 +51,12 @@ export default async function Home({ searchParams }: PageProps<"/">) {
             )}
           </p>
         </div>
-        <RunButton />
+        <div className="flex items-center gap-4">
+          <Link href="/keywords" className="text-sm text-link">
+            Keywords
+          </Link>
+          <RunButton />
+        </div>
       </header>
 
       <nav className="mt-6 flex gap-1 overflow-x-auto text-sm">

@@ -7,12 +7,17 @@ const SourceToggle = z.object({ enabled: z.boolean().default(false) }).passthrou
 
 const ConfigSchema = z.object({
   candidate: z.object({ timezone: z.string().default("America/New_York") }).default({ timezone: "America/New_York" }),
+  keywords: z.object({
+    search_terms: z.array(z.string()),
+    strong_titles: z.array(z.string()),
+    soft_titles: z.array(z.string()),
+    early_talent_titles: z.array(z.string()),
+    seniority: z.array(z.string()),
+    description_terms: z.array(z.string()),
+    exclude_titles: z.array(z.string()),
+  }),
   profile: z.object({
     title_keywords: z.array(z.string()),
-    adjacent_title_keywords: z.array(z.string()).default([]),
-    domain_terms: z.array(z.string()).default([]),
-    seniority: z.array(z.string()),
-    excluded_titles: z.array(z.string()).default([]),
     salary: z.object({
       target: z.number(),
       sweet_min: z.number(),
@@ -85,6 +90,7 @@ const CompaniesSchema = z.object({
 });
 
 export type Config = z.infer<typeof ConfigSchema>;
+export type Keywords = Config["keywords"];
 export type TargetCompany = z.infer<typeof CompaniesSchema>["companies"][number];
 
 export interface Profile {

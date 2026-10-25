@@ -1,15 +1,15 @@
 import type { Config } from "./config";
-import { matchTitle } from "./filter";
+import { matchesTargetTitle } from "./filter";
 import { normCompany, normTitle, ratio } from "./text";
 import type { Posting, ScoredPosting, SemanticResult } from "./types";
 
 const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
 
 export function titlePoints(title: string, config: Config): number {
-  const m = matchTitle(title, config.profile);
+  const exact = matchesTargetTitle(title, config.profile);
   const w = config.weights.title;
   // Anything scored has already passed the L&D prefilter, so an unlisted title still earns half.
-  return m === "exact" ? w : w / 2;
+  return exact ? w : w / 2;
 }
 
 export function salaryPoints(p: Pick<Posting, "salaryMin" | "salaryMax" | "salaryCurrency">, config: Config): number {

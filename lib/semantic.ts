@@ -16,7 +16,7 @@ function systemPrompt(profile: Profile): string {
   const p = profile.config.profile;
   return [
     "You screen job postings for one candidate looking for a mid-level Learning & Development leadership role",
-    `(${p.seniority.join(", ")}; base salary around $${Math.round(p.salary.target / 1000)}k).`,
+    `(${profile.config.keywords.seniority.join(", ")}; base salary around $${Math.round(p.salary.target / 1000)}k).`,
     "Rate how well each posting fits on a 0-10 scale, where 10 is as good a fit as the reference job and 0 is irrelevant.",
     "Judge the actual work described, not the title: scope, who the role leads, and whether it owns L&D strategy and budget.",
     "",

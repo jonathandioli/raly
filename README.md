@@ -44,7 +44,6 @@ Copy `.env.example` to `.env.local` for local use. On Vercel, set the same varia
 | `ADZUNA_APP_ID`, `ADZUNA_APP_KEY` | Adzuna, the main broad source (free key) |
 | `SMTP_*`, `EMAIL_FROM`, `EMAIL_TO` | Sending the daily email |
 | `CRON_SECRET` | Lets Vercel Cron call `/api/cron/daily` |
-| `DASHBOARD_PASSWORD` | Password for the dashboard sign-in page (stays signed in 90 days) |
 | `CONTACT_EMAIL` | User-Agent contact; also required by USAJobs |
 | `SERPAPI_KEY`, `RAPIDAPI_KEY`, `USAJOBS_API_KEY` | Optional sources; also switch them on in `config.yaml` |
 

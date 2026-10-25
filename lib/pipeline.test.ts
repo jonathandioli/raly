@@ -9,6 +9,7 @@ import { renderHtml, renderMarkdown } from "./report";
 import { salaryPoints, scorePosting } from "./score";
 import { relativeDate } from "./sources/search";
 import { parseJobPage, parseRobots, titleFromUrl } from "./sources/sitemap";
+import { parseKpmgCards } from "./sources/kpmg";
 import { htmlToText, normTitle, ratio } from "./text";
 import type { RawPosting } from "./types";
 
@@ -212,6 +213,10 @@ describe("career-site sitemaps", () => {
     expect(j.title).toBe("Director, Talent Development");
     expect(j.location).toBe("Cambridge, MA");
     expect(j.salaryMin).toBe(150000);
+  });
+  it("reads KPMG result cards", () => {
+    const html = `<a href="/jobdetail/?jobId=137920" data-id="1" class="x"><div>Experienced</div><div>Advisory</div><div>Manager, Talent Development</div><div>2 Locations</div><div>Manager, Talent Development</div><div>Boston, MA; Chicago, IL</div></a>`;
+    expect(parseKpmgCards(html)).toEqual([{ id: "137920", title: "Manager, Talent Development" }]);
   });
   it("marks non-US JobPosting locations as international", () => {
     const html = `<script type="application/ld+json">{"@type":"JobPosting","title":"Head of L&D","jobLocation":{"address":{"addressLocality":"Dublin","addressCountry":"IE"}}}</script>`;

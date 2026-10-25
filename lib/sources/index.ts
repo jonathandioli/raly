@@ -2,6 +2,8 @@ import type { Profile, TargetCompany } from "../config";
 import { pMap, redact } from "../http";
 import type { RawPosting, SourceResult } from "../types";
 import { fetchAshby, fetchGreenhouse, fetchLever } from "./ats";
+import { fetchEightfold } from "./eightfold";
+import { fetchKpmg } from "./kpmg";
 import { fetchOracle } from "./oracle";
 import { fetchSitemap } from "./sitemap";
 import { fetchWorkday } from "./workday";
@@ -66,6 +68,8 @@ export async function fetchAll(profile: Profile): Promise<SourceResult[]> {
   if (s.workday.enabled) jobs.push(runAts("workday", byAts("workday"), fetchWorkday));
   if (s.oracle.enabled) jobs.push(runAts("oracle", byAts("oracle"), fetchOracle));
   if (s.careersite.enabled) jobs.push(runAts("careersite", byAts("sitemap"), fetchSitemap));
+  if (s.eightfold.enabled) jobs.push(runAts("eightfold", byAts("eightfold"), fetchEightfold));
+  if (s.kpmg.enabled) jobs.push(runAts("kpmg", byAts("kpmg"), fetchKpmg));
   if (s.adzuna.enabled) {
     const opts = { country: s.adzuna.country, perPage: s.adzuna.results_per_page, maxDays: config.profile.posted_within_days };
     jobs.push(runQueries("adzuna", queries, 2, (q) => searchAdzuna(q, opts)));

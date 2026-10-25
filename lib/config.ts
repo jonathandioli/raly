@@ -57,6 +57,8 @@ const ConfigSchema = z.object({
     workday: SourceToggle.default({ enabled: true }),
     oracle: SourceToggle.default({ enabled: true }),
     careersite: SourceToggle.default({ enabled: true }),
+    eightfold: SourceToggle.default({ enabled: true }),
+    kpmg: SourceToggle.default({ enabled: true }),
     serpapi: SourceToggle.extend({ max_queries_per_run: z.number().default(3) }),
     jsearch: SourceToggle.extend({ max_queries_per_run: z.number().default(5) }),
     usajobs: SourceToggle,
@@ -74,6 +76,10 @@ const CompaniesSchema = z.object({
       z.object({ name: z.string(), ats: z.literal("oracle"), url: z.string().url() }),
       // Any career site with a sitemap and schema.org JobPosting pages (SuccessFactors, Avature, Phenom…).
       z.object({ name: z.string(), ats: z.literal("sitemap"), url: z.string().url() }),
+      // Eightfold: the careers URL plus the tenant domain shown in its robots.txt / sitemap URL.
+      z.object({ name: z.string(), ats: z.literal("eightfold"), url: z.string().url(), domain: z.string() }),
+      // KPMG US's own job search.
+      z.object({ name: z.string(), ats: z.literal("kpmg") }),
     ]),
   ),
 });

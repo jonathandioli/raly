@@ -176,3 +176,9 @@ companies:
   - { name: Rapid7, ats: sitemap, url: https://careers.rapid7.com }
   - { name: HMH, ats: sitemap, url: https://careers.hmhco.com }
   - { name: Southwest Airlines, ats: sitemap, url: https://careers.southwestair.com }
+
+  # Added from careers links Aly's team sent (2026-10-24)
+  - { name: Liberty Mutual, ats: eightfold, url: https://searchjobs.libertymutualgroup.com/careers, domain: libertymutual.com }
+  - { name: KPMG, ats: kpmg }
+  - { name: HubSpot, ats: greenhouse, token: hubspotjobs }
+  - { name: Alnylam Pharmaceuticals, ats: greenhouse, token: alnylampharmaceuticals }

@@ -96,7 +96,7 @@ function Posting({ row: r, rank, tz }: { row: PostingRow; rank: number; tz: stri
   return (
     <li className="flex gap-4 py-5">
       {/* Fit scores are hidden for now; roles are still listed best fit first. */}
-      <div className="w-6 shrink-0 pt-0.5 text-right text-xs text-muted tabular-nums">{rank}</div>
+      <div className="w-10 shrink-0 text-right font-serif text-2xl leading-none font-semibold text-muted tabular-nums">{rank}</div>
       <div className="min-w-0 flex-1">
         <a href={r.url} target="_blank" rel="noreferrer" className="font-medium leading-snug hover:underline">
           {r.title}

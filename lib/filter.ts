@@ -1,5 +1,5 @@
 import type { Config } from "./config";
-import { prefilter } from "./prefilter";
+import { earlyTalentPhrases, prefilter } from "./prefilter";
 import { hasPhrase, normCompany, normTitle, titleTokens } from "./text";
 import type { Posting } from "./types";
 
@@ -67,7 +67,11 @@ export type RejectReason = "title" | "excluded_title" | "blocklist" | "age" | "l
 export function rejectReason(p: Posting, config: Config, now = new Date()): RejectReason | null {
   const profile = config.profile;
   const norm = normTitle(p.title);
-  if (profile.excluded_titles.some((x) => hasPhrase(norm, x))) return "excluded_title";
+  // "Internship Program Manager" mustn't trip the "Intern" exclusion: ignore an excluded word
+  // that's part of a matched early-talent phrase.
+  const programs = earlyTalentPhrases(norm);
+  const excluded = profile.excluded_titles.filter((x) => hasPhrase(norm, x) && !programs.some((ph) => hasPhrase(ph, x)));
+  if (excluded.length) return "excluded_title";
   // The deterministic L&D screen (title + description vocabulary, manager+ level) decides relevance.
   if (!prefilter(p).pass) return "title";
   const company = normCompany(p.company);

@@ -7,9 +7,12 @@ import type { RawPosting } from "../types";
 // employer lists thousands of jobs, so: search a few L&D terms, screen titles, and fetch
 // full details only for the survivors.
 
-const SEARCHES = ["learning development", "training", "talent development", "leadership development", "organizational development", "instructional design"];
+const SEARCHES = [
+  "learning development", "training", "talent development", "leadership development", "organizational development",
+  "instructional design", "university relations", "early careers", "campus recruiting", "internship program", "onboarding",
+];
 const PAGE = 20; // Workday's maximum page size
-const PAGES_PER_SEARCH = 2;
+const PAGES_PER_SEARCH = 1; // results are relevance-sorted; one page keeps ~80 employers inside Vercel's 5-minute limit
 
 export interface WorkdaySite {
   base: string; // https://tenant.wd5.myworkdayjobs.com

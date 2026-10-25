@@ -13,7 +13,7 @@ async function runAts<C extends TargetCompany>(
   fn: (c: C) => Promise<RawPosting[]>,
 ): Promise<SourceResult> {
   const errors: string[] = [];
-  const lists = await pMap(companies, 6, async (c) => {
+  const lists = await pMap(companies, 10, async (c) => {
     try {
       return await fn(c);
     } catch (e) {

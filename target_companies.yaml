@@ -118,3 +118,37 @@ companies:
   - { name: Klaviyo, ats: greenhouse, token: klaviyo }
   - { name: CarGurus, ats: greenhouse, token: cargurus }
   - { name: Ginkgo Bioworks, ats: greenhouse, token: ginkgobioworks }
+
+  # Biotech / pharma with a Boston-area presence
+  - { name: Amgen, ats: workday, url: https://amgen.wd1.myworkdayjobs.com/Careers }
+  - { name: Beam Therapeutics, ats: greenhouse, token: beamtherapeutics }
+  - { name: Blueprint Medicines, ats: greenhouse, token: blueprintmedicines }
+  - { name: Bristol Myers Squibb, ats: workday, url: https://bristolmyerssquibb.wd5.myworkdayjobs.com/BMS }
+  - { name: Dana-Farber Cancer Institute, ats: workday, url: https://danafarber.wd5.myworkdayjobs.com/dana-farber }
+  - { name: GSK, ats: workday, url: https://gsk.wd5.myworkdayjobs.com/GSKCareers }
+  - { name: Genentech, ats: workday, url: https://roche.wd3.myworkdayjobs.com/ROG-A2O-GENE }
+  - { name: Ipsen, ats: workday, url: https://ipsen.wd103.myworkdayjobs.com/Ipsen_Careers }
+  - { name: Vertex Pharmaceuticals, ats: workday, url: https://vrtx.wd501.myworkdayjobs.com/vertex_careers }
+
+  # More Boston / southern NH employers
+  - { name: Bauer Hockey, ats: greenhouse, token: bauerhockeycascademaveriklacrosse }
+  - { name: Bose, ats: workday, url: https://boseallaboutme.wd503.myworkdayjobs.com/Bose_Careers }
+  - { name: MFS Investment Management, ats: workday, url: https://mfs.wd1.myworkdayjobs.com/MFS-Careers }
+  - { name: New Balance, ats: workday, url: https://newbalance.wd1.myworkdayjobs.com/Careers }
+  - { name: Point32Health, ats: workday, url: https://point32health.wd5.myworkdayjobs.com/THP }
+
+  # Companies whose product is corporate learning
+  - { name: 360Learning, ats: lever, token: 360learning }
+  - { name: Articulate, ats: lever, token: articulate }
+  - { name: BetterUp, ats: ashby, token: betterup }
+  - { name: Bright Horizons, ats: workday, url: https://brighthorizons.wd5.myworkdayjobs.com/External-NorthAmerica }
+  - { name: Cengage Group, ats: workday, url: https://cengage.wd5.myworkdayjobs.com/CengageNorthAmericaCareers }
+  - { name: Cornerstone OnDemand, ats: greenhouse, token: cornerstone }
+  - { name: Coursera, ats: greenhouse, token: coursera }
+  - { name: Degreed, ats: greenhouse, token: degreed }
+  - { name: Docebo, ats: ashby, token: docebo }
+  - { name: Guild, ats: greenhouse, token: guild }
+  - { name: Harvard Business Publishing, ats: workday, url: https://hbpublishing.wd1.myworkdayjobs.com/Careers }
+  - { name: Pluralsight, ats: workday, url: https://pluralsight.wd1.myworkdayjobs.com/Careers }
+  - { name: Skillsoft, ats: greenhouse, token: skillsoft }
+  - { name: Udemy, ats: greenhouse, token: udemy }

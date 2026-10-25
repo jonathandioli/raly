@@ -13,6 +13,11 @@ profile:
     - Head of L&D
     - Talent Development Manager
     - Learning Experience Manager
+    # Early talent: the corporate counterpart of a university co-op director
+    - University Relations Manager
+    - Early Careers Program Manager
+    - Campus Recruiting Manager
+    - Internship Program Manager
   # ...or a half-credit match of these adjacent titles.
   adjacent_title_keywords:
     - Training Manager
@@ -144,6 +149,9 @@ profile:
     - coaching
     - budget
     - people management
+    - early career
+    - internship
+    - university relations
   company_blocklist: []
 
 # Queries run once per title keyword x search location against the keyword-search sources.

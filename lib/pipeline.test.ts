@@ -113,6 +113,11 @@ describe("filter", () => {
     expect(at("Senior Software Engineer")).toBe("title");
     expect(at("Director, Talent Development")).toBeNull();
   });
+  it("keeps internship program roles past the Intern exclusion", () => {
+    const at = (title: string) => rejectReason(normalize(raw({ title }), NOW), config, NOW);
+    expect(at("Internship Program Manager")).toBeNull();
+    expect(at("Finance Intern")).toBe("excluded_title");
+  });
   it("does not treat 'internal' as 'intern'", () => {
     expect(rejectReason(normalize(raw({ title: "Manager, Internal Learning & Development" }), NOW), config, NOW)).toBeNull();
   });
@@ -174,6 +179,16 @@ describe("prefilter", () => {
     expect(pf("Pediatric Education Program Manager", "curriculum and facilitation").pass).toBe(false);
     expect(pf("Project Manager, New Capabilities", "onboarding program").pass).toBe(false);
     expect(pf("Sr. Manager, Workforce Capability Strategy", "upskill").pass).toBe(true);
+  });
+  it("passes early-talent program roles but not interns or IC recruiters", () => {
+    expect(pf("Manager, University Relations").pass).toBe(true);
+    expect(pf("Early Careers Program Manager").pass).toBe(true);
+    expect(pf("Senior Manager, Internship & Co-op Programs").pass).toBe(true);
+    expect(pf("Internship Program Manager").pass).toBe(true);
+    expect(pf("Associate Director, New Hire Experience").pass).toBe(true);
+    expect(pf("University Recruiter").pass).toBe(false);
+    expect(pf("Summer Intern, Finance").pass).toBe(false);
+    expect(pf("Engineering Manager, Early Careers").pass).toBe(false);
   });
   it("catches an odd title when the description is clearly L&D", () => {
     const body = "Own the LMS, instructional design, needs analysis, Kirkpatrick evaluation and leadership development.";

@@ -187,7 +187,7 @@ export async function runPipeline(opts: RunOptions = {}): Promise<RunResult> {
     const shouldEmail = (opts.email ?? true) && !opts.dryRun && emailConfigured() && (top.length > 0 || digestRows.length > 0);
     if (shouldEmail) {
       try {
-        const subject = `${config.email.subject_prefix}: ${top.length} new${top[0] ? ` · top ${top[0].score} ${top[0].title} @ ${top[0].company}` : ""}`;
+        const subject = `${config.email.subject_prefix}: ${top.length} new${top[0] ? ` · ${top[0].title} @ ${top[0].company}` : ""}`;
         stats.durationMs = Date.now() - started;
         await sendReport(subject, renderHtml(input), renderMarkdown(input));
         stats.emailed = true;

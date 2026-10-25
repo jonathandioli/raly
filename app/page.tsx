@@ -90,19 +90,13 @@ export default async function Home({ searchParams }: PageProps<"/">) {
   );
 }
 
-function scoreColor(score: number) {
-  return score >= 70 ? "text-good" : score >= 55 ? "text-mid" : "text-low";
-}
-
 function Posting({ row: r, rank, tz }: { row: PostingRow; rank: number; tz: string }) {
   const where =
     r.remote_type === "remote" ? (r.location && !/remote/i.test(r.location) ? `Remote · ${r.location}` : "Remote") : `${r.location}${r.remote_type === "hybrid" ? " (hybrid)" : ""}`;
   return (
     <li className="flex gap-4 py-5">
-      <div className="w-10 shrink-0 text-right">
-        <div className={`font-serif text-2xl leading-none font-semibold tabular-nums ${scoreColor(r.score)}`}>{r.score}</div>
-        <div className="mt-1 text-xs text-muted">#{rank}</div>
-      </div>
+      {/* Fit scores are hidden for now; roles are still listed best fit first. */}
+      <div className="w-6 shrink-0 pt-0.5 text-right text-xs text-muted tabular-nums">{rank}</div>
       <div className="min-w-0 flex-1">
         <a href={r.url} target="_blank" rel="noreferrer" className="font-medium leading-snug hover:underline">
           {r.title}
@@ -131,7 +125,7 @@ function Posting({ row: r, rank, tz }: { row: PostingRow; rank: number; tz: stri
               </button>
             </form>
           ))}
-          <span className="ml-auto text-xs text-muted" title={r.score_parts ? Object.entries(r.score_parts).map(([k, v]) => `${k} ${Math.round(v)}`).join(" · ") : ""}>
+          <span className="ml-auto text-xs text-muted">
             {r.sources.join(", ")} · {r.id}
           </span>
         </div>
